@@ -1,0 +1,16 @@
+{
+  "name": "airnbnb_express_backend",
+  "version": "1.0.0",
+  "description": "A rest api backend built in express for my airbnb demo project",
+  "license": "ISC",
+  "author": "Edgar Lorsch",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}
