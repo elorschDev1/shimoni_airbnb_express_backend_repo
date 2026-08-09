@@ -1,9 +1,9 @@
 const {Router}=require("express");
 
+const {handleClientReviews}=require("../controllers/addReviewsController");
+
 const addReviewsRouter=Router();
 
-addReviewsRouter.post("/",(req,res)=>{
-    res.json({message:"A post request has been received on the client reviews end."});
-})
+addReviewsRouter.post("/",handleClientReviews);
 
 module.exports=addReviewsRouter;

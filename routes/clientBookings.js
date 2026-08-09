@@ -1,9 +1,8 @@
 const {Router}=require("express");
+const {handleClientBookings}=require('../controllers/clientBookingController');
 
 const clientBookingRoute=Router();
 
-clientBookingRoute.post("/",(req,res)=>{
-    res.json({message:"A client booking request has been made to this route."});
-});
+clientBookingRoute.post("/",handleClientBookings);
 
 module.exports=clientBookingRoute;
