@@ -11,24 +11,24 @@ clientBookingRoute.post("/",[
     .withMessage("Fill in your name")
     .isLength({min:3,max:25})
     .withMessage("Ensure your name is between 3 and 25 characters long.")
-    .isAlpha()
+     .matches(/^[A-Za-z]+(?:\s[A-Za-z]+)*$/)
     .withMessage("Ensure your name is in a valid format")
     .escape(),
 
     body("email")
     .trim()
-    .isEmpty()
+    .notEmpty()
     .withMessage("Provide an email address that can be used to contact you.")
     .isEmail()
     .withMessage("Ensure the email you have provided is valid.")
     .normalizeEmail(),
 
     body("phoneValue")
-    .isEmpty()
+    .notEmpty()
     .withMessage("Kindly provide your phone number for contacting."),
 
     body("guestNumber")
-    .not().isInt()
+    .isInt()
     .withMessage("Ensure you enter valid data for the number of guests expected.")
     .isInt({min:1})
     .withMessage("The apartment cannot be booked by less than 1 guest.")
@@ -36,7 +36,7 @@ clientBookingRoute.post("/",[
     .withMessage("The apartment can only be booked by a maximum of 6 guests."),
 
     body("roomsBooked")
-    .not().isInt()
+    .isInt()
     .withMessage("Ensure you enter valid data for the number of rooms to be booked.")
     .isInt({min:1})
     .withMessage("Kindly book a valid number of bedrooms.")
@@ -62,13 +62,8 @@ clientBookingRoute.post("/",[
     }),
 
     body("specialRequest")
-    .optional()
     .trim()
-    .isLength({ min: 20, max: 250 })
-    .withMessage(
-    "If provided, your special request must be between 20 and 250 characters long."
-  )
-  .escape()
+    .escape()
 ],
 (req,res,next)=>{
     const clientBookingErrors=validationResult(req);

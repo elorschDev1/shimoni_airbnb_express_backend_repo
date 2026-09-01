@@ -4,6 +4,14 @@ const {handleClientReviews}=require("../controllers/addReviewsController");
 
 const addReviewsRouter=Router();
 
+const clientReviewMiddleware=(req,res,next)=>{
+    const clientReviewErrors=validationResult(req);
+    if(!clientReviewErrors.isEmpty()){
+        return res.status(400).json({errors:clientReviewErrors.array()})
+    }
+    next();
+}
+
 addReviewsRouter.post("/",[
     //field being validated is the clientName field, and rules such as notEmpty, withMessage etc are used to validate the data
     //That is the essence of the body() function
@@ -11,8 +19,6 @@ addReviewsRouter.post("/",[
     .trim()
     .notEmpty()
     .withMessage("Kindly fill in your name if you wish to leave a review.")
-    .isAlpha()
-    .withMessage("Ensure your name only contains alphabetical characters")
     .isLength({min:3,max:20})
     .withMessage("Ensure your name is between 3 and 20 characters long.")
     .escape(),
@@ -27,13 +33,7 @@ addReviewsRouter.post("/",[
    .withMessage("Ensure your message is not less than 3 characters long, and not more than 250 characters long.")
    .escape()
 ],
-(req,res,next)=>{
-    const clientReviewErrors=validationResult(req);
-    if(!clientReviewErrors.isEmpty()){
-        return res.status(400).json({errors:clientReviewErrors.array()})
-    }
-    next();
-},
+clientReviewMiddleware,
 handleClientReviews
 
 );
